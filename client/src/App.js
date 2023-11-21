@@ -21,7 +21,11 @@ function App() {
       console.log(data)
       setSummary(data)
     } catch (e) {
-      setSummary(["Invalid Url"])
+      if (e.response && e.response.status === 400) {
+        setSummary(['Invalid URL. Please provide a valid YouTube URL.']);
+      } else {
+        setSummary(['Something went wrong. Please try again later.']);
+      }
     }
   }
   return (

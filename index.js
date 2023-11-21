@@ -55,7 +55,11 @@ app.post('/summarize', async (req, res) => {
         res.status(200).json(summary)
     } catch (e) {
         console.log(e)
-        res.status(500).json({msg:e?.message})
+        if (e.message.includes('YoutubeTranscript')) {
+            res.status(400).json({ msg: 'Invalid URL. Please provide a valid YouTube URL.' });
+        } else {
+            res.status(500).json({ msg: 'Something went wrong during summarization.' });
+        }
     }
 })
 
