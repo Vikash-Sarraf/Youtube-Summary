@@ -16,9 +16,13 @@ function App() {
     setSummary([])
     e.preventDefault()
     console.log(url)
-    const {data} = await axios.post("http://localhost:2000/summarize",{url:url})
-    console.log(data)
-    setSummary(data)
+    try {
+      const {data} = await axios.post("http://localhost:2000/summarize",{url:url})
+      console.log(data)
+      setSummary(data)
+    } catch (e) {
+      setSummary(["Invalid Url"])
+    }
   }
   return (
     <div className="App">
