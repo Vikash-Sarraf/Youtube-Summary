@@ -24,7 +24,7 @@ app.post('/summarize', async (req, res) => {
         const data = await YoutubeTranscript.fetchTranscript(req.body.url)
         let text = []
         j = 0
-        const segmentCount = 5;
+        const segmentCount = 4;
         const elementsPerSegment = Math.ceil(data.length / segmentCount);
 
         for (let i = 0; i < data.length; i++) {
@@ -44,12 +44,9 @@ app.post('/summarize', async (req, res) => {
 
             console.log(input.length)
             const response = await hf.summarization({
-                model:'sshleifer/distilbart-cnn-12-6',
+                model:'facebook/bart-large-cnn',
                 inputs:input,
-                parameters:{
-                    max_length:250,
-                    min_length:200
-                }
+
             })
             //console.log(response)
             summary[i] = response.summary_text
@@ -61,7 +58,6 @@ app.post('/summarize', async (req, res) => {
         res.status(500).json({msg:e?.message})
     }
 })
-
 
 
 
